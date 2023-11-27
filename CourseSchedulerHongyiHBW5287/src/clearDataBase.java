@@ -16,11 +16,14 @@ public class clearDataBase {
     public static void clearDB(){
         
         connection = DBConnection.getConnection();
-        //private static ArrayList<String> faculty = new ArrayList<String>();
-        try
-        {
-            connection.prepareStatement("DELETE FROM APP.COURSEENTRY");
-            System.out.println("cleared");
+        try{
+            //connection.prepareStatement("DELETE FROM ClassQueries WHERE CONDITION 1=1");
+            connection.prepareStatement("DELETE FROM APP.CLASSDESCRIPTION WHERE 1=1");
+            connection.prepareStatement("DELETE FROM APP.CLASSENTRY WHERE 1=1");
+            connection.prepareStatement("DELETE FROM APP.COURSEENTRY WHERE 1=1");
+            connection.prepareStatement("DELETE FROM APP.STUDENTENTRY WHERE 1=1");
+            //connection.prepareStatement("DELETE FROM ClassQueries WHERE CONDITION 1=1");
+            System.out.println("executed"); 
         }
         catch(SQLException sqlException)
         {
