@@ -21,14 +21,14 @@ public class CourseQueries {
     private static PreparedStatement getAllCourseCodes;
     private static ResultSet resultSet;
     
-    public static void addCourse(String courseCode, String courseDesc)
+    public static void addCourse(CourseEntry course)
     {
         connection = DBConnection.getConnection();
         try
         {
             addCourse = connection.prepareStatement("insert into app.CourseEntry (courseCode, description) values (?, ?)");
-            addCourse.setString(1, courseCode);
-            addCourse.setString(2, courseDesc);
+            addCourse.setString(1, course.getCourseCode());
+            addCourse.setString(2, course.getDescription());
             addCourse.executeUpdate();
         }
         catch(SQLException sqlException)

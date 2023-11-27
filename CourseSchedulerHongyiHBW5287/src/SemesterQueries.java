@@ -35,7 +35,6 @@ public class SemesterQueries {
         {
             sqlException.printStackTrace();
         }
-        
     }
     
     public static ArrayList<String> getSemesterList()
@@ -56,6 +55,7 @@ public class SemesterQueries {
         {
             sqlException.printStackTrace();
         }
+        
         return semester;
         
     }
