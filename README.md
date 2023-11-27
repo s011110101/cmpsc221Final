@@ -1,2 +1,2 @@
 # cmpsc221Final
-Download the zip file to ensure the database will work.
+This is a personal code archive and should not be used as a reference of homework.
