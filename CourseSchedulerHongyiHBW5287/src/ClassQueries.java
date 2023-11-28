@@ -43,7 +43,7 @@ public class ClassQueries {
         int result = 0;
         try
         {
-            getClassSeats = connection.prepareStatement("select seats from app.courseEntry WHERE coursecode = "+courseCode+" AND semester = "+semester);
+            getClassSeats = connection.prepareStatement("select seats from app.courseEntry WHERE coursecode = '"+courseCode+"' AND semester = '"+semester+"'");
             resultSet = getClassSeats.executeQuery();
             result = (Integer) resultSet.getObject(1);
             
@@ -61,7 +61,7 @@ public class ClassQueries {
         ArrayList<String> courseCodes = new ArrayList<String>();
         try
         {
-            getCourseList = connection.prepareStatement("select courseCode from app.courseEntry WHERE semester = "+semester);
+            getCourseList = connection.prepareStatement("select courseCode from app.classentry WHERE semester = '"+semester+"'");
             resultSet = getCourseList.executeQuery();
             
             while(resultSet.next())

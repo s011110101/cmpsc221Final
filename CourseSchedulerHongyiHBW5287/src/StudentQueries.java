@@ -12,10 +12,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 public class StudentQueries {
     private static Connection connection;
     private static PreparedStatement addStudent;
     private static PreparedStatement getStudentID;
+    private static PreparedStatement getStudentIDByName;
     private static PreparedStatement getStudentFirstName;
     private static PreparedStatement getStudentLastName;
     //private static PreparedStatement getSemesterList;
@@ -24,7 +27,7 @@ public class StudentQueries {
         connection = DBConnection.getConnection();
         try
         {
-            addStudent = connection.prepareStatement("insert into app.Student (StudentID, firstName, lastName) values (?, ?, ?)");
+            addStudent = connection.prepareStatement("insert into app.StudentEntry (StudentID, firstName, lastName) values (?, ?, ?)");
             addStudent.setString(1, student.getStudentID());
             addStudent.setString(2, student.getFirstName());
             addStudent.setString(3, student.getLastName());
@@ -43,18 +46,14 @@ public class StudentQueries {
         ArrayList<StudentEntry> students = new ArrayList<StudentEntry>();
         try
         {
-            getStudentID = connection.prepareStatement("select StudentID from app.Student");
+            getStudentID = connection.prepareStatement("select StudentID,FirstName,LastName from app.StudentEntry");
             resultSet = getStudentID.executeQuery();
             
             while(resultSet.next())
             {
                 String StudentID = resultSet.getString(1);
-                getStudentFirstName = connection.prepareStatement("select FirstName from app.Student Where StudentID = "+StudentID);
-                resultSet = getStudentFirstName.executeQuery();
-                String FirstName = resultSet.getString(1);
-                getStudentFirstName = connection.prepareStatement("select LastName from app.Student Where StudentID = "+StudentID);
-                resultSet = getStudentLastName.executeQuery();
-                String LastName = resultSet.getString(1);
+                String FirstName = resultSet.getString(2);
+                String LastName = resultSet.getString(3);
                 students.add(new StudentEntry(StudentID,FirstName,LastName));
             }
         }
@@ -63,6 +62,25 @@ public class StudentQueries {
             sqlException.printStackTrace();
         }
         return students;
+    }
+    public static String getStudentIDByName(String StudentFullName){
+        List<String> StudentName = Arrays.asList(StudentFullName.split(", "));
+        connection = DBConnection.getConnection();
+        try
+        {
+            getStudentIDByName = connection.prepareStatement("select StudentID from app.StudentEntry where FirstName = '"+StudentName.get(0)+"' and LastName = '"+StudentName.get(1)+"'");
+            resultSet = getStudentIDByName.executeQuery();
+            
+            while(resultSet.next())
+            {
+                return resultSet.getString(1);
+            }
+        }
+        catch(SQLException sqlException)
+        {
+            sqlException.printStackTrace();
+        }
+        return "";
     }
     public static StudentEntry getStudent(String studentID){
         //Part II

@@ -13,15 +13,20 @@ import java.util.ArrayList;
  */
 public class clearDataBase {
     private static Connection connection;
+    private static PreparedStatement delete;
     public static void clearDB(){
         
         connection = DBConnection.getConnection();
         try{
             //connection.prepareStatement("DELETE FROM ClassQueries WHERE CONDITION 1=1");
-            connection.prepareStatement("DELETE FROM APP.CLASSDESCRIPTION WHERE 1=1");
-            connection.prepareStatement("DELETE FROM APP.CLASSENTRY WHERE 1=1");
-            connection.prepareStatement("DELETE FROM APP.COURSEENTRY WHERE 1=1");
-            connection.prepareStatement("DELETE FROM APP.STUDENTENTRY WHERE 1=1");
+            delete = connection.prepareStatement("DELETE FROM APP.CLASSDESCRIPTION WHERE 1=1");
+            delete.executeQuery();
+            delete = connection.prepareStatement("DELETE FROM APP.CLASSENTRY WHERE 1=1");
+            delete.executeQuery();
+            delete = connection.prepareStatement("DELETE FROM APP.COURSEENTRY WHERE 1=1");
+            delete.executeQuery();
+            delete = connection.prepareStatement("DELETE FROM APP.STUDENTENTRY WHERE 1=1");
+            delete.executeQuery();
             //connection.prepareStatement("DELETE FROM ClassQueries WHERE CONDITION 1=1");
             System.out.println("executed"); 
         }
